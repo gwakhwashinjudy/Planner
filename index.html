@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기독교 교육 프랜차이즈 마스터 플래너</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: var(--primary-color);
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        .date-display {
+            font-size: 14px;
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .today-target-card {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff9f9;
+        }
+        .card-title {
+            font-size: 13px;
+            color: var(--accent-color);
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .step-tag {
+            background: #f1c40f;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+        }
+        .target-content {
+            font-size: 17px;
+            font-weight: bold;
+            line-height: 1.6;
+            color: var(--primary-color);
+        }
+        .routine-section h2 {
+            font-size: 15px;
+            color: var(--primary-color);
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 6px;
+            margin-top: 20px;
+        }
+        .routine-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .routine-item input[type="checkbox"] {
+            margin-top: 3px;
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .routine-text {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .time-tag {
+            background: #e2e8f0;
+            color: #4a5568;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-right: 6px;
+            font-weight: bold;
+        }
+        .bible-verse {
+            text-align: center;
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 13px;
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>프랜차이즈 마스터 플래너</h1>
+        <div class="date-display" id="current-date">로딩 중...</div>
+    </header>
+
+    <!-- 오늘 딱 하나만 집중할 액션 플랜 -->
+    <div class="card today-target-card">
+        <div class="card-title">
+            <span>오늘의 빌드업 타겟</span>
+            <span class="step-tag" id="step-tag">철학 정립</span>
+        </div>
+        <div class="target-content" id="today-action-plan">
+            로딩 중...
+        </div>
+    </div>
+
+    <!-- 매일 반복해야 하는 데일리 핵심 루틴 -->
+    <div class="card">
+        <div class="card-title" style="color: var(--primary-color);">매일 필수 데일리 루틴</div>
+        
+        <div class="routine-section">
+            <h2>🌅 아침: 몰입과 축적</h2>
+            <div class="routine-item">
+                <input type="checkbox" id="r1">
+                <label for="r1" class="routine-text"><span class="time-tag">30분</span> 기독교 교육 철학 독서 및 요약 노트 작성</label>
+            </div>
+            <div class="routine-item">
+                <input type="checkbox" id="r2">
+                <label for="r2" class="routine-text"><span class="time-tag">60분</span> 프랜차이즈 시스템 매뉴얼 매일 1페이지 작성</label>
+            </div>
+        </div>
+
+        <div class="routine-section">
+            <h2>☀️ 오후: 본업 집중 및 틈새 축적</h2>
+            <div class="routine-item">
+                <input type="checkbox" id="r3">
+                <label for="r3" class="routine-text"><span class="time-tag">상시</span> 상담 피드백, 코칭 성공 사례 메모장에 아카이빙</label>
+            </div>
+            <div class="routine-item">
+                <input type="checkbox" id="r4">
+                <label for="r4" class="routine-text"><span class="time-tag">틈새</span> 떠오르는 브랜드명 메모 후 KIPRIS 상표권 검색</label>
+            </div>
+        </div>
+
+        <div class="routine-section">
+            <h2>🌃 저녁: 영향력 확장</h2>
+            <div class="routine-item">
+                <input type="checkbox" id="r5">
+                <label for="r5" class="routine-text"><span class="time-tag">40분</span> 블로그 가치관 칼럼 업로드 또는 인스타 릴스 콘티 작성</label>
+            </div>
+            <div class="routine-item">
+                <input type="checkbox" id="r6">
+                <label for="r6" class="routine-text"><span class="time-tag">20분</span> 전국 지도 비전 보드 보며 선포 후 마감</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="bible-verse">
+        "네 시작은 미약하였으나 네 나중은 심히 창대하리라"<br>(욥기 8:7)
+    </div>
+</div>
+
+<script>
+    // 20가지 구체적 액션 플랜 데이터 배열
+    const actionPlans = [
+        { step: "1단계 철학", text: "핵심 교육 이념(Mission Statement)을 기독교 세계관을 담아 한 문장으로 정의해 보세요." },
+        { step: "1단계 철학", text: "브랜드의 행동 지침이 될 핵심 가치(Core Values) 3~5가지를 설정하세요. (예: 정직, 탁월함, 비전)" },
+        { step: "1단계 철학", text: "현재 운영 중인 교육 과정에 기독교적 가치(하나님이 주신 달란트, 시간 관리 등)가 어떻게 녹아있는지 구조화하세요." },
+        { step: "1단계 철학", text: "기독교 대안학교 운영 사례나 프랜차이즈 시스템 구축 관련 서적을 찾아 3페이지 읽고 인사이트를 기록하세요." },
+        { step: "1단계 철학", text: "국내외에서 성공적으로 운영 중인 기독교 기반 교육 브랜드 1곳을 선정해 벤치마킹 요소를 정리하세요." },
+        { step: "2단계 시스템", text: "출근부터 퇴근까지의 하루 일과를 타임라인으로 꼼꼼하게 기록해 매뉴얼의 뼈대를 잡으세요." },
+        { step: "2단계 시스템", text: "학부모 방문 시 기독교적 가치관과 탁월한 성과를 동시에 어필할 수 있는 '상담 스크립트' 초안을 작성하세요." },
+        { step: "2단계 시스템", text: "학생의 학습 성향을 파악하고 비전을 심어주는 코칭 단계를 1단계부터 5단계까지 시각화해 보세요." },
+        { step: "2단계 시스템", text: "그동안 코칭을 통해 완벽한 성적 향상이나 변화를 경험한 학생의 사례를 스토리텔링 문서로 자산화하세요." },
+        { step: "2단계 시스템", text: "소상공인시장진흥공단 등에서 제공하는 프랜차이즈화 지원 사업이나 관련 법률 교육 일정을 조회해 보세요." },
+        { step: "3단계 브랜딩", text: "기독교적 가치관과 교육 전문가로서의 정체성이 드러나도록 인스타그램 프로필을 최적화하세요." },
+        { step: "3단계 브랜딩", text: "왜 지금 시대에 기독교 세계관 기반의 교육이 필요한지 진정성 있는 블로그 칼럼 글을 1편 작성하세요." },
+        { step: "3단계 브랜딩", text: "학부모들이 공감할 만한 '아이의 올바른 공부 습관'에 대한 1분 미만 숏폼(Reels) 콘티 대본을 짜보세요." },
+        { step: "3단계 브랜딩", text: "기독교 교육 관련 학회, 교사 모임, 또는 지역 내 크리스천 비즈니스 모임(CBMC 등)을 찾아 가입 방법을 알아보세요." },
+        { step: "3단계 브랜딩", text: "지역 학부모 대상 무료 온라인(Zoom) 특강('스스로 공부하는 아이')의 간단한 기획안을 만들어 보세요." },
+        { step: "4단계 시각화", text: "기독교적 의미와 교육적 신뢰감을 동시에 줄 수 있는 브랜드 이름을 생각나는 대로 10개 이상 브레인스토밍하세요." },
+        { step: "4단계 시각화", text: "전국 지도 이미지나 프로그램을 구해서 가상으로 가맹점이 들어설 거점 지역들을 빨간 점으로 표시해 보세요." },
+        { step: "4단계 시각화", text: "마음에 드는 브랜드 후보 이름들을 특허청 상표검색 사이트(KIPRIS)에서 조회하여 등록 가능 여부를 확인하세요." },
+        { step: "4단계 시각화", text: "[1호 직영점 시스템 안착 -> 2호 가맹점 오픈 -> 전국 확산]으로 이어지는 대략적인 3개년 타임라인을 스케치하세요." },
+        { step: "4단계 시각화", text: "지금까지 정리한 아이디어들을 바탕으로 컴퓨터에 '프랜차이즈 마스터 매뉴얼' 통합 폴더를 생성하세요." }
+    ];
+
+    function updatePlanner() {
+        const now = new Date();
+        
+        // 날짜 표시 업데이트
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const date = String(now.getDate()).padStart(2, '0');
+        const days = ['일', '월', '화', '수', '목', '금', '토'];
+        const dayName = days[now.getDay()];
+        document.getElementById('current-date').innerText = `${year}년 ${month}월 ${date}일 (${dayName}요일)`;
+
+        // 1년 중 몇 번째 날인지 계산하여 20개 계획을 매일 자동으로 순환시킴
+        const start = new Date(now.getFullYear(), 0, 0);
+        const diff = now - start;
+        const oneDay = 1000 * 60 * 60 * 24;
+        const dayOfYear = Math.floor(diff / oneDay);
+        
+        const index = dayOfYear % actionPlans.length;
+        const todayPlan = actionPlans[index];
+        
+        // 화면에 최종 주입
+        document.getElementById('step-tag').innerText = todayPlan.step;
+        document.getElementById('today-action-plan').innerText = todayPlan.text;
+    }
+
+    // 실행
+    updatePlanner();
+</script>
+
+</body>
+</html>
