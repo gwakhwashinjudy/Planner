@@ -301,7 +301,7 @@ const actionPlans = [
         const dayName = days[now.getDay()];
         document.getElementById('current-date').innerText = `${year}년 ${month}월 ${date}일 (${dayName}요일)`;
 
-        // 1년 중 몇 번째 날인지 계산하여 20개 계획을 매일 자동으로 순환시킴
+        // 1년 중 몇 번째 날인지 계산하여 100개 계획을 매일 자동으로 순환시킴
         const start = new Date(now.getFullYear(), 0, 0);
         const diff = now - start;
         const oneDay = 1000 * 60 * 60 * 24;
