@@ -109,6 +109,16 @@
             margin-top: 30px;
             line-height: 1.6;
         }
+        .reset-btn {
+            background: none;
+            border: none;
+            color: #bdc3c7;
+            font-size: 11px;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 0;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -122,7 +132,7 @@
     <!-- 오늘 딱 하나만 집중할 액션 플랜 -->
     <div class="card today-target-card">
         <div class="card-title">
-            <span>오늘의 빌드업 타겟</span>
+            <span id="day-counter">대망의 1일차 타겟</span>
             <span class="step-tag" id="step-tag">철학 정립</span>
         </div>
         <div class="target-content" id="today-action-plan">
@@ -132,52 +142,61 @@
 
     <!-- 매일 반복해야 하는 데일리 핵심 루틴 -->
     <div class="card">
-        <div class="card-title" style="color: var(--primary-color);">매일 필수 데일리 루틴</div>
+        <div class="card-title" style="color: var(--primary-color);">나의 가벼운 데일리 루틴</div>
         
         <div class="routine-section">
-            <h2>🌅 아침: 몰입과 축적</h2>
+            <h2>🌅 아침: 영성과 기본기 (영감 노트)</h2>
             <div class="routine-item">
                 <input type="checkbox" id="r1">
-                <label for="r1" class="routine-text"><span class="time-tag">30분</span> 기독교 교육 철학 독서 및 요약 노트 작성</label>
+                <label for="r1" class="routine-text"><span class="time-tag">기본 루틴</span> 말씀 묵상, 기도, 매일 영어 공부 완료하기</label>
             </div>
             <div class="routine-item">
                 <input type="checkbox" id="r2">
-                <label for="r2" class="routine-text"><span class="time-tag">60분</span> 프랜차이즈 시스템 매뉴얼 매일 1페이지 작성</label>
+                <label for="r2" class="routine-text"><span class="time-tag">1분</span> 묵상/영어 중 와닿은 핵심 단어나 문장 한 줄 기록하기</label>
             </div>
         </div>
 
         <div class="routine-section">
-            <h2>☀️ 오후: 본업 집중 및 틈새 축적</h2>
+            <h2>☀️ 오후: 본업과 축적 (스케치)</h2>
             <div class="routine-item">
                 <input type="checkbox" id="r3">
-                <label for="r3" class="routine-text"><span class="time-tag">상시</span> 상담 피드백, 코칭 성공 사례 메모장에 아카이빙</label>
+                <label for="r3" class="routine-text"><span class="time-tag">기본 루틴</span> 오늘 진행한 수업 점검 및 피드백 마치기</label>
             </div>
             <div class="routine-item">
                 <input type="checkbox" id="r4">
-                <label for="r4" class="routine-text"><span class="time-tag">틈새</span> 떠오르는 브랜드명 메모 후 KIPRIS 상표권 검색</label>
+                <label for="r4" class="routine-text"><span class="time-tag">1분</span> 코칭 중 발견한 아이들의 긍정적인 성과 키워드로 메모하기</label>
             </div>
         </div>
 
         <div class="routine-section">
-            <h2>🌃 저녁: 영향력 확장</h2>
+            <h2>🌃 저녁: 마감과 축복 (비전·감사·꿈)</h2>
             <div class="routine-item">
                 <input type="checkbox" id="r5">
-                <label for="r5" class="routine-text"><span class="time-tag">40분</span> 블로그 가치관 칼럼 업로드 또는 인스타 릴스 콘티 작성</label>
+                <label for="r5" class="routine-text"><span class="time-tag">3분</span> 오늘 제시된 <b>'초소형 빌드업 타겟 미션'</b> 1개 클리어하기</label>
             </div>
             <div class="routine-item">
                 <input type="checkbox" id="r6">
-                <label for="r6" class="routine-text"><span class="time-tag">20분</span> 전국 지도 비전 보드 보며 선포 후 마감</label>
+                <label for="r6" class="routine-text"><span class="time-tag">2분</span> 오늘 하루 감사한 일 딱 세 가지 적어보기</label>
+            </div>
+            <div class="routine-item">
+                <input type="checkbox" id="r7">
+                <label for="r7" class="routine-text"><span class="time-tag">2분</span> 미래 전국 센터를 상상하며 '꿈 일기' 한 줄 쓰기</label>
+            </div>
+            <div class="routine-item">
+                <input type="checkbox" id="r8">
+                <label for="r8" class="routine-text"><span class="time-tag">1분</span> 전국 지도를 마음에 그리며 <b>강력하게 비전 선포</b>하기</label>
             </div>
         </div>
     </div>
 
     <div class="bible-verse">
         "네 시작은 미약하였으나 네 나중은 심히 창대하리라"<br>(욥기 8:7)
+        <br><button class="reset-btn" onclick="resetStartDate()">1일차부터 다시 시작하기</button>
     </div>
 </div>
 
 <script>
-    // 100일 초소형 계단식 미션 데이터 배열
+    // 100일 초소형 계단식 미션 데이터 배열 (이전과 동일하게 유지)
     const actionPlans = [
         { step: "1단계 철학", text: "빈 종이와 펜을 책상 위에 올려두는 것으로 오늘 미션을 시작하세요." },
         { step: "1단계 철학", text: "종이에 '기독교 교육'을 생각했을 때 떠오르는 단어 딱 1개만 적으세요. (예: 비전)" },
@@ -292,23 +311,38 @@
             
             document.getElementById('current-date').innerText = year + "년 " + month + "월 " + date + "일 (" + dayName + "요일)";
 
-            // 안정적인 날짜 기반 인덱스 계산 (에러 방지)
-            const start = new Date(year, 0, 1);
-            const diff = now.getTime() - start.getTime();
-            const oneDay = 1000 * 60 * 60 * 24;
-            const dayOfYear = Math.floor(diff / oneDay);
+            let startDateStr = localStorage.getItem('franchise_start_date');
+            if (!startDateStr) {
+                const todayZero = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                localStorage.setItem('franchise_start_date', todayZero.toISOString());
+                startDateStr = todayZero.toISOString();
+            }
+
+            const startDate = new Date(startDateStr);
+            const todayDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
             
-            const index = Math.abs(dayOfYear) % actionPlans.length;
+            const diffTime = todayDate.getTime() - startDate.getTime();
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            const currentDayNum = (diffDays % actionPlans.length) + 1;
+            const index = currentDayNum - 1;
             const todayPlan = actionPlans[index];
             
+            document.getElementById('day-counter').innerText = "대망의 " + currentDayNum + "일차 빌드업 타겟";
             document.getElementById('step-tag').innerText = todayPlan.step;
             document.getElementById('today-action-plan').innerText = todayPlan.text;
         } catch (e) {
-            document.getElementById('today-action-plan').innerText = "플래너 로딩 중 오류가 발생했습니다. 코드를 다시 확인해 주세요.";
+            document.getElementById('today-action-plan').innerText = "플래너 로딩 중 오류가 발생했습니다.";
         }
     }
 
-    // 실행
+    function resetStartDate() {
+        if(confirm("정말 오늘부터 다시 1일차로 리셋하시겠습니까?")) {
+            localStorage.removeItem('franchise_start_date');
+            updatePlanner();
+        }
+    }
+
     window.onload = updatePlanner;
 </script>
 
