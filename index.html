@@ -10,6 +10,8 @@
             --accent-color: #e74c3c;
             --bg-color: #f8f9fa;
             --card-bg: #ffffff;
+            --accent-light: #fff9f9;
+            --border: #edf2f7;
         }
         body {
             font-family: 'Malgun Gothic', sans-serif;
@@ -24,13 +26,40 @@
         }
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         h1 {
             color: var(--primary-color);
             font-size: 22px;
             margin-bottom: 5px;
         }
+        
+        /* 💡 상단 날짜 이동 네비게이션 바 스타일 추가 */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .nav-btn {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--primary-color);
+            transition: all 0.2s;
+        }
+        .nav-btn:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        .nav-today-btn {
+            background-color: #edf2f7;
+            font-weight: bold;
+        }
+
         .date-display {
             font-size: 14px;
             color: #7f8c8d;
@@ -45,7 +74,7 @@
         }
         .today-target-card {
             border-left: 5px solid var(--accent-color);
-            background-color: #fff9f9;
+            background-color: var(--accent-light);
         }
         .card-title {
             font-size: 13px;
@@ -72,7 +101,7 @@
         .routine-section h2 {
             font-size: 15px;
             color: var(--primary-color);
-            border-bottom: 2px solid #edf2f7;
+            border-bottom: 2px solid var(--border);
             padding-bottom: 6px;
             margin-top: 20px;
         }
@@ -126,10 +155,18 @@
 <div class="container">
     <header>
         <h1>프랜차이즈 마스터 플래너</h1>
-        <div class="date-display" id="current-date">날짜 계산 중...</div>
     </header>
 
-    <!-- 오늘 딱 하나만 집중할 액션 플랜 -->
+    <div class="nav-container">
+        <button class="nav-btn" onclick="changeDate(-1)">◀ 이전날</button>
+        <button class="nav-btn nav-today-btn" onclick="goToday()">오늘</button>
+        <button class="nav-btn" onclick="changeDate(1)">다음날 ▶</button>
+    </div>
+
+    <div class="card" style="padding: 10px 20px; text-align: center; margin-bottom: 15px;">
+        <div class="date-display" id="current-date">날짜 계산 중...</div>
+    </div>
+
     <div class="card today-target-card">
         <div class="card-title">
             <span id="day-counter">대망의 1일차 타겟</span>
@@ -140,7 +177,6 @@
         </div>
     </div>
 
-    <!-- 매일 반복해야 하는 데일리 핵심 루틴 -->
     <div class="card">
         <div class="card-title" style="color: var(--primary-color);">나의 가벼운 데일리 루틴</div>
         
@@ -196,7 +232,7 @@
 </div>
 
 <script>
-    // 100일 초소형 계단식 미션 데이터 배열 (이전과 동일하게 유지)
+    // 100일 미션 데이터 배열 유지
     const actionPlans = [
         { step: "1단계 철학", text: "빈 종이와 펜을 책상 위에 올려두는 것으로 오늘 미션을 시작하세요." },
         { step: "1단계 철학", text: "종이에 '기독교 교육'을 생각했을 때 떠오르는 단어 딱 1개만 적으세요. (예: 비전)" },
@@ -300,50 +336,101 @@
         { step: "4단계 시각화", text: "완성된 설계도를 바탕으로, 이제 실제 행동으로 옮길 다음 시즌의 100일 마스터 플랜을 기대함으로 기획하세요." }
     ];
 
-    function updatePlanner() {
+    // 💡 사용자가 현재 보고 있는 기준 날짜 저장 전역 변수
+    let currentDate = new Date();
+
+    function updatePlanner(targetDate) {
         try {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const date = String(now.getDate()).padStart(2, '0');
+            const year = targetDate.getFullYear();
+            const month = String(targetDate.getMonth() + 1).padStart(2, '0');
+            const date = String(targetDate.getDate()).padStart(2, '0');
             const days = ['일', '월', '화', '수', '목', '금', '토'];
-            const dayName = days[now.getDay()];
+            const dayName = days[targetDate.getDay()];
             
+            // 1. 상단 날짜 화면 표시 업데이트
             document.getElementById('current-date').innerText = year + "년 " + month + "월 " + date + "일 (" + dayName + "요일)";
 
+            // 2. 시작 날짜 계산 및 초기화
             let startDateStr = localStorage.getItem('franchise_start_date');
             if (!startDateStr) {
-                const todayZero = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                localStorage.setItem('franchise_start_date', todayZero.toISOString());
-                startDateStr = todayZero.toISOString();
+                const todayZero = new Date();
+                const defaultStart = new Date(todayZero.getFullYear(), todayZero.getMonth(), todayZero.getDate());
+                localStorage.setItem('franchise_start_date', defaultStart.toISOString());
+                startDateStr = defaultStart.toISOString();
             }
 
             const startDate = new Date(startDateStr);
-            const todayDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            // 타임존 간섭 없는 안전한 날짜 정규화
+            const compareDate = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
             
-            const diffTime = todayDate.getTime() - startDate.getTime();
+            // 3. 일차(Day) 계산 알고리즘
+            const diffTime = compareDate.getTime() - startDate.getTime();
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
             
-            const currentDayNum = (diffDays % actionPlans.length) + 1;
+            // 음수일(과거) 처리 및 순환 구조 안정화
+            let currentDayNum = (diffDays % actionPlans.length) + 1;
+            if (currentDayNum <= 0) {
+                currentDayNum += actionPlans.length;
+            }
+            
             const index = currentDayNum - 1;
             const todayPlan = actionPlans[index];
             
+            // 4. 화면 데이터 매핑
             document.getElementById('day-counter').innerText = "대망의 " + currentDayNum + "일차 빌드업 타겟";
             document.getElementById('step-tag').innerText = todayPlan.step;
             document.getElementById('today-action-plan').innerText = todayPlan.text;
+
+            // 5. 💡 날짜별 체크박스 보관 시스템 연동
+            const dateKey = `${year}-${month}-${date}`;
+
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                const storageKey = `${dateKey}-${checkbox.id}`;
+                
+                // 해당 날짜에 저장된 체크 기록 가져오기
+                const savedState = localStorage.getItem(storageKey);
+                checkbox.checked = (savedState === 'true');
+
+                // 체크 상태 클릭 시 실시간 업데이트 독립 저장
+                checkbox.onclick = null; // 기존 중복 바인딩 방지
+                checkbox.addEventListener('change', () => {
+                    localStorage.setItem(storageKey, checkbox.checked);
+                });
+            });
+
         } catch (e) {
             document.getElementById('today-action-plan').innerText = "플래너 로딩 중 오류가 발생했습니다.";
+            console.error(e);
         }
     }
 
+    // 💡 네비게이션 제어 함수 1: 이전날 / 다음날 계산
+    function changeDate(days) {
+        currentDate.setDate(currentDate.getDate() + days);
+        updatePlanner(currentDate);
+    }
+
+    // 💡 네비게이션 제어 함수 2: 무조건 오늘로 복귀
+    function goToday() {
+        currentDate = new Date();
+        updatePlanner(currentDate);
+    }
+
+    // 1일차 기준일 리셋 기능
     function resetStartDate() {
-        if(confirm("정말 오늘부터 다시 1일차로 리셋하시겠습니까?")) {
-            localStorage.removeItem('franchise_start_date');
-            updatePlanner();
+        if(confirm("정말 오늘을 1일차로 지정하여 다시 시작하시겠습니까?\n(기존 날짜별 데일리 체크 기록은 유지됩니다.)")) {
+            const now = new Date();
+            const todayZero = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            localStorage.setItem('franchise_start_date', todayZero.toISOString());
+            currentDate = new Date(); // 화면도 오늘로 이동
+            updatePlanner(currentDate);
         }
     }
 
-    window.onload = updatePlanner;
+    // 파일 로드 시 전역 기준 날짜로 플래너 시작
+    window.onload = function() {
+        updatePlanner(currentDate);
+    };
 </script>
 
 </body>
